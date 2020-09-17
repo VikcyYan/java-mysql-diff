@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -105,7 +106,7 @@ public class AppTest {
     for (File sqlFile : Arrays.asList(sqlFile1, sqlFile2)) {
       try (BufferedWriter bufferedWriter =
           new BufferedWriter(new OutputStreamWriter(new FileOutputStream(sqlFile),
-              Charset.forName("UTF-8")))) {
+                  StandardCharsets.UTF_8))) {
         bufferedWriter.write(SQL_FOR_TEST);
       }
     }

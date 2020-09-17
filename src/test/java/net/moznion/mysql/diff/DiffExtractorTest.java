@@ -22,6 +22,16 @@ public class DiffExtractorTest {
   private static final SchemaDumper SCHEMA_DUMPER = new SchemaDumper();
 
   public static class ForTableDiff {
+
+    /**
+     * 比较两个sql脚本的表结构差异
+     * @param oldSql 旧版本数据库
+     * @param newSql 新版本数据库
+     * @return 表更新语句
+     * @throws SQLException
+     * @throws IOException
+     * @throws InterruptedException
+     */
     private String getAlterTableDiffRightly(String oldSql, String newSql) throws SQLException,
         IOException, InterruptedException {
       String oldSchema = SCHEMA_DUMPER.dump(oldSql);

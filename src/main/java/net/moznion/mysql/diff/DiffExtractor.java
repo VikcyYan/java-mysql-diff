@@ -36,6 +36,7 @@ public class DiffExtractor {
         .sorted()
         .collect(Collectors.toList());
 
+    // List转换为Map，k->表名,v->表定义
     Map<String, Table> oldTableMap = oldTables.stream()
         .collect(Collectors.toMap(Table::getTableName, t -> t));
     Map<String, Table> newTableMap = newTables.stream()
@@ -44,9 +45,11 @@ public class DiffExtractor {
     for (String tableName : newTableNames) {
       Table newTable = newTableMap.get(tableName);
       if (oldTableMap.containsKey(tableName)) {
+        // 表存在，生成表升级语句
         Table oldTable = oldTableMap.get(tableName);
         diffStringBuilder.append(extractTableDiff(tableName, oldTable, newTable));
       } else {
+        // 表不存在，生成表创建语句
         diffStringBuilder.append(newTable.getContent()).append(";\n\n");
       }
     }
@@ -135,6 +138,12 @@ public class DiffExtractor {
     return changes;
   }
 
+  /**
+   *
+   * @param oldTable
+   * @param newTable
+   * @return
+   */
   private static List<String> extractOrdinaryKeyDiff(Table oldTable, Table newTable) {
     List<String> changes = new ArrayList<>();
 
